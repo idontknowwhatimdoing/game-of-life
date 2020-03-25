@@ -1,0 +1,39 @@
+body {
+	text-align: center;
+	font-size: xx-large;
+	font-family: 'Helvetica', sans-serif;
+	background: #3d3d3d;
+}
+
+.container {
+	display: flex;
+	justify-content: flex-start;
+}
+
+#colBtn {
+	width: 500px;
+	height: 500px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+canvas {
+	left: 0px;
+	top: 0px;
+	display: inline-block;
+	background: white;
+	top: 50%;
+}
+
+button {
+	margin: 15px 15px 15px 15px;
+	padding: 15px 45px;
+	font-size: large;
+	border-radius: 50px;
+}
+
+button:active {
+	transform: translateY(4px);
+}
