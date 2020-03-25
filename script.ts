@@ -1,19 +1,15 @@
-// cells[i][j] = alive || dead
-// new array for each generation
-
 function create_cells(rows: number, cols: number) {
 	// create a 2d array
 	let cells = new Array(rows);
 	for (let i = 0; i < cols; i++)
-		cells[i] = [];
+		cells[i] = new Array(rows).fill(null);
 
 	return cells;
 }
 
 function init_cells(cells: any[][]) {
 	// initialize each cell with a random state (alive or dead)
-	cells.map(x => x.map(i => i = 1/*Math.random() > 0.5 ? 1 : 0*/));
-	return cells;
+	return cells.map(x => x.map(i => i = Math.random() > 0.5 ? true : false));
 }
 
 function update() {
@@ -23,5 +19,3 @@ function update() {
 function render(cells: any[][]) {
 	// draw the array of cells on the screen
 }
-
-// render(update());
