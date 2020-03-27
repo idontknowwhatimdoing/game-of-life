@@ -1,39 +1,40 @@
 "use strict";
 function create_cells(dim) {
-    let cells = new Array(dim);
-    return cells.map(row => (row = Array(dim).fill(null)));
+    return new Array(dim).fill(new Array(dim).fill(null));
 }
 function init_cells(cells) {
     // initialize each cell with a random state (alive or dead)
-    return cells.map(row => row.map(cell => Math.random() >= 0.3));
+    return cells.map(row => row.map(cell => Math.random() >= 0.5));
 }
 function check_rules(cells, i, j) {
-    let countAlive = 0;
+    let count_alive = 0;
     if (i > 0 && j > 0)
         if (cells[i - 1][j - 1])
-            countAlive++;
+            count_alive++;
     if (j > 0)
         if (cells[i][j - 1])
-            countAlive++;
+            count_alive++;
     if (i < cells.length - 1 && j > 0)
         if (cells[i + 1][j - 1])
-            countAlive++;
+            count_alive++;
     if (i > 0)
         if (cells[i - 1][j])
-            countAlive++;
+            count_alive++;
     if (i < cells.length - 1)
         if (cells[i + 1][j])
-            countAlive++;
+            count_alive++;
     if (i > 0 && j < cells[i].length - 1)
         if (cells[i - 1][j + 1])
-            countAlive++;
+            count_alive++;
     if (j < cells[i].length - 1)
         if (cells[i][j + 1])
-            countAlive++;
+            count_alive++;
     if (i < cells.length - 1 && j < cells[i].length - 1)
         if (cells[i + 1][j + 1])
-            countAlive++;
-    if (countAlive == 3)
+            count_alive++;
+    if (!cells[i][j] && count_alive == 3)
+        return true;
+    else if (cells[i][j] && (count_alive == 2 || count_alive == 3))
         return true;
     else
         return false;
@@ -49,7 +50,7 @@ function render(cells, canvas, scale) {
     cells.map(row => row.map(cell => {
         ctx.fillStyle = cell ? "white" : "black";
         ctx.fillRect(x, y, dim, dim);
-        if (x + dim > canvas.width + canvas.offsetLeft) {
+        if (x + dim >= canvas.width) {
             x = 0;
             y += dim;
         }
@@ -59,5 +60,5 @@ function render(cells, canvas, scale) {
     let new_cells = update(cells);
     setTimeout(render, 100, new_cells, canvas, scale);
 }
-let scale = 50;
+let scale = 40;
 render(init_cells(create_cells(scale)), document.getElementById("canvas"), scale);
