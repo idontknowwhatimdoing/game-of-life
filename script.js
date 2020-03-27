@@ -1,7 +1,4 @@
 class Cell {
-	// static width; Je ne peux pas optimiser mon programme parce que Firefox ne supporte pas le static en JavaScript
-	// static height; J'ai envie de me battre
-
 	constructor(x, y) {
 		this.x = x;
 		this.y = y;
@@ -23,13 +20,7 @@ class Cell {
 		ctx.fillRect(this.x, this.y, this.width, this.height);
 		ctx.closePath();
 	}
-
-	// static setDim(size, canvas) {   ALED
-	// 	width = canvas.width / size;
-	// 	height = canvas.height / size;
-	// }
 }
-
 
 class Cells {
 	constructor(size) {
@@ -57,36 +48,36 @@ class Cells {
 	updateState(i, j) {
 		var countAlive = 0;
 
-		if (i > 0 && j > 0)	
-			if (this.cells[i-1][j-1].alive)
+		if (i > 0 && j > 0)
+			if (this.cells[i - 1][j - 1].alive)
 				countAlive++;
 
-		if (j > 0)		
-			if (this.cells[i][j-1].alive)
+		if (j > 0)
+			if (this.cells[i][j - 1].alive)
 				countAlive++;
 
-		if (i < this.cells.length - 1 &&  j > 0)	
-			if (this.cells[i+1][j-1].alive)
+		if (i < this.cells.length - 1 && j > 0)
+			if (this.cells[i + 1][j - 1].alive)
 				countAlive++;
 
-		if (i > 0)	
-			if (this.cells[i-1][j].alive)
+		if (i > 0)
+			if (this.cells[i - 1][j].alive)
 				countAlive++;
 
-		if (i < this.cells.length - 1)	
-			if (this.cells[i+1][j].alive)
+		if (i < this.cells.length - 1)
+			if (this.cells[i + 1][j].alive)
 				countAlive++;
 
-		if (i > 0 && j < this.cells[i].length - 1)	
-			if (this.cells[i-1][j+1].alive)
+		if (i > 0 && j < this.cells[i].length - 1)
+			if (this.cells[i - 1][j + 1].alive)
 				countAlive++;
 
-		if (j < this.cells[i].length - 1)	
-			if (this.cells[i][j+1].alive)
+		if (j < this.cells[i].length - 1)
+			if (this.cells[i][j + 1].alive)
 				countAlive++;
 
-		if (i < this.cells.length - 1 && j < this.cells[i].length - 1)	
-			if (this.cells[i+1][j+1].alive)
+		if (i < this.cells.length - 1 && j < this.cells[i].length - 1)
+			if (this.cells[i + 1][j + 1].alive)
 				countAlive++;
 
 		if (countAlive == 3)
@@ -107,7 +98,6 @@ class Cells {
 			}
 	}
 }
-
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
