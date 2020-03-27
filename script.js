@@ -1,7 +1,4 @@
 class Cell {
-	// static width; Je ne peux pas optimiser mon programme parce que Firefox ne supporte pas le static en JavaScript
-	// static height; J'ai envie de me battre
-
 	constructor(x, y) {
 		this.x = x;
 		this.y = y;
@@ -23,13 +20,7 @@ class Cell {
 		ctx.fillRect(this.x, this.y, this.width, this.height);
 		ctx.closePath();
 	}
-
-	// static setDim(size, canvas) {   ALED
-	// 	width = canvas.width / size;
-	// 	height = canvas.height / size;
-	// }
 }
-
 
 class Cells {
 	constructor(size) {
@@ -39,8 +30,7 @@ class Cells {
 
 	init() {
 		this.cells = new Array();
-		for (var n = 0; n < this.size; n++)
-			this.cells[n] = new Array();
+		for (var n = 0; n < this.size; n++) this.cells[n] = new Array();
 
 		var x = 0;
 		var y = 0;
@@ -57,42 +47,27 @@ class Cells {
 	updateState(i, j) {
 		var countAlive = 0;
 
-		if (i > 0 && j > 0)	
-			if (this.cells[i-1][j-1].alive)
-				countAlive++;
+		if (i > 0 && j > 0) if (this.cells[i - 1][j - 1].alive) countAlive++;
 
-		if (j > 0)		
-			if (this.cells[i][j-1].alive)
-				countAlive++;
+		if (j > 0) if (this.cells[i][j - 1].alive) countAlive++;
 
-		if (i < this.cells.length - 1 &&  j > 0)	
-			if (this.cells[i+1][j-1].alive)
-				countAlive++;
+		if (i < this.cells.length - 1 && j > 0)
+			if (this.cells[i + 1][j - 1].alive) countAlive++;
 
-		if (i > 0)	
-			if (this.cells[i-1][j].alive)
-				countAlive++;
+		if (i > 0) if (this.cells[i - 1][j].alive) countAlive++;
 
-		if (i < this.cells.length - 1)	
-			if (this.cells[i+1][j].alive)
-				countAlive++;
+		if (i < this.cells.length - 1) if (this.cells[i + 1][j].alive) countAlive++;
 
-		if (i > 0 && j < this.cells[i].length - 1)	
-			if (this.cells[i-1][j+1].alive)
-				countAlive++;
+		if (i > 0 && j < this.cells[i].length - 1)
+			if (this.cells[i - 1][j + 1].alive) countAlive++;
 
-		if (j < this.cells[i].length - 1)	
-			if (this.cells[i][j+1].alive)
-				countAlive++;
+		if (j < this.cells[i].length - 1) if (this.cells[i][j + 1].alive) countAlive++;
 
-		if (i < this.cells.length - 1 && j < this.cells[i].length - 1)	
-			if (this.cells[i+1][j+1].alive)
-				countAlive++;
+		if (i < this.cells.length - 1 && j < this.cells[i].length - 1)
+			if (this.cells[i + 1][j + 1].alive) countAlive++;
 
-		if (countAlive == 3)
-			this.cells[i][j].alive = true;
-		else if (countAlive > 3 || countAlive < 2)
-			this.cells[i][j].alive = false;
+		if (countAlive == 3) this.cells[i][j].alive = true;
+		else if (countAlive > 3 || countAlive < 2) this.cells[i][j].alive = false;
 	}
 
 	animate(ctx, canvas) {
@@ -100,14 +75,11 @@ class Cells {
 		for (var i = 0; i < this.cells.length; i++)
 			for (var j = 0; j < this.cells[i].length; j++) {
 				this.updateState(i, j);
-				if (this.cells[i][j].alive)
-					this.cells[i][j].drawAlive(ctx);
-				else
-					this.cells[i][j].drawDead(ctx);
+				if (this.cells[i][j].alive) this.cells[i][j].drawAlive(ctx);
+				else this.cells[i][j].drawDead(ctx);
 			}
 	}
 }
-
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
@@ -119,18 +91,23 @@ var cells = new Cells(size);
 cells.init();
 
 var intervalId = 0;
-btnStart.onclick = () => intervalId = setInterval("cells.animate(ctx, canvas);", 50);
+btnStart.onclick = () => (intervalId = setInterval("cells.animate(ctx, canvas);", 50));
 
 btnStop.onclick = () => clearInterval(intervalId);
 
-canvas.onclick = (e) => {
+canvas.onclick = e => {
 	for (var i = 0; i < cells.cells.length; i++) {
 		for (var j = 0; j < cells.cells[i].length; j++) {
-			if (e.x >= cells.cells[i][j].x && e.x <= cells.cells[i][j].x + cells.cells[i][j].width && e.y >= cells.cells[i][j].y && e.y <= cells.cells[i][j].y + cells.cells[i][j].height) {
+			if (
+				e.x >= cells.cells[i][j].x &&
+				e.x <= cells.cells[i][j].x + cells.cells[i][j].width &&
+				e.y >= cells.cells[i][j].y &&
+				e.y <= cells.cells[i][j].y + cells.cells[i][j].height
+			) {
 				cells.cells[i][j].alive = false;
 				cells.cells[i][j].drawDead(ctx);
 				console.log("oui");
 			}
 		}
 	}
-}
+};
