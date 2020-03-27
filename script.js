@@ -1,15 +1,11 @@
 "use strict";
 function create_cells(dim) {
-    // create a 2d array
     let cells = new Array(dim);
-    for (let i = 0; i < dim; i++) {
-        cells[i] = new Array(dim).fill(null);
-    }
-    return cells;
+    return cells.map(row => (row = Array(dim).fill(null)));
 }
 function init_cells(cells) {
     // initialize each cell with a random state (alive or dead)
-    return cells.map(row => row.map(cell => Math.random() > 0.5));
+    return cells.map(row => row.map(cell => Math.random() >= 0.3));
 }
 function check_rules(cells, i, j) {
     let countAlive = 0;
@@ -43,20 +39,17 @@ function check_rules(cells, i, j) {
         return false;
 }
 function update(cells) {
-    // check every cell and its neighbours and create a new array of cells based on the rules
     return cells.map((row, i) => row.map((cell, j) => check_rules(cells, i, j)));
 }
 function render(cells, canvas, scale) {
-    // draw the array of cells on the screen
     let ctx = canvas.getContext("2d");
-    let w = canvas.width;
     let x = 0;
     let y = 0;
-    let dim = (w / scale) * 2;
+    let dim = canvas.width / scale;
     cells.map(row => row.map(cell => {
         ctx.fillStyle = cell ? "white" : "black";
         ctx.fillRect(x, y, dim, dim);
-        if (x + dim > w + canvas.offsetLeft) {
+        if (x + dim > canvas.width + canvas.offsetLeft) {
             x = 0;
             y += dim;
         }
