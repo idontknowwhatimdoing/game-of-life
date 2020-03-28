@@ -61,4 +61,4 @@ function render(cells, canvas, scale) {
     setTimeout(render, 100, new_cells, canvas, scale);
 }
 let scale = 40;
-render(init_cells(create_cells(scale)), document.getElementById("canvas"), scale);
+render(init_cells(create_cells(scale)), document.querySelector("canvas"), scale);

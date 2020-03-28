@@ -61,6 +61,6 @@ function render(cells: boolean[][], canvas: HTMLCanvasElement, scale: number) {
 let scale = 40;
 render(
 	init_cells(create_cells(scale)),
-	<HTMLCanvasElement>document.getElementById("canvas"),
+	<HTMLCanvasElement>document.querySelector("canvas"),
 	scale
 );
